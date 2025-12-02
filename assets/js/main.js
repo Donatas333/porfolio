@@ -126,44 +126,13 @@
   });
 
   /**
-   * Init isotope layout and filters
-   */
-  document.querySelectorAll('.isotope-layout').forEach(function(isotopeItem) {
-    let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
-    let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
-    let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
-
-    let initIsotope;
-    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
-      initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
-        itemSelector: '.isotope-item',
-        layoutMode: layout,
-        filter: filter,
-        sortBy: sort
-      });
-    });
-
-    isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filters) {
-      filters.addEventListener('click', function() {
-        isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
-        this.classList.add('filter-active');
-        initIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-        if (typeof aosInit === 'function') {
-          aosInit();
-        }
-      }, false);
-    });
-  });
-
-  /**
    * Init portfolio swiper (paprasta inicializacija)
    */
+  let portfolioSwiperInstance;
   function initPortfolioSwiper() {
     const portfolioSwiper = document.querySelector('.portfolio-swiper');
     if (portfolioSwiper) {
-      new Swiper(portfolioSwiper, {
+      portfolioSwiperInstance = new Swiper(portfolioSwiper, {
         slidesPerView: 2,
         spaceBetween: 30,
         navigation: {
@@ -182,6 +151,34 @@
     }
   }
   window.addEventListener("load", initPortfolioSwiper);
+
+  /**
+   * Filtrų logika Swiper skaidrėms
+   */
+  document.querySelectorAll('.portfolio-filters li').forEach(function(filterBtn) {
+    filterBtn.addEventListener('click', function() {
+      // Pažymėk aktyvų filtrą
+      document.querySelector('.filter-active').classList.remove('filter-active');
+      this.classList.add('filter-active');
+
+      // Gauk filtravimo klasę
+      const filter = this.getAttribute('data-filter');
+
+      // Rodyk arba slėpk skaidres
+      document.querySelectorAll('.swiper-slide').forEach(function(slide) {
+        if (filter === '*' || slide.classList.contains(filter.substring(1))) {
+          slide.style.display = 'flex';
+        } else {
+          slide.style.display = 'none';
+        }
+      });
+
+      // Atnaujink Swiper po filtravimo
+      if (portfolioSwiperInstance) {
+        portfolioSwiperInstance.update();
+      }
+    });
+  });
 
   /**
    * Correct scrolling position upon page load for URLs containing hash links.
