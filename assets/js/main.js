@@ -170,21 +170,28 @@
   /**
    * Init swiper sliders
    */
-  function initSwiper() {
-    document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
-      let config = JSON.parse(
-        swiperElement.querySelector(".swiper-config").innerHTML.trim()
-      );
-
-      if (swiperElement.classList.contains("swiper-tab")) {
-        initSwiperWithCustomPagination(swiperElement, config);
-      } else {
-        new Swiper(swiperElement, config);
+function initPortfolioSwiper() {
+  const portfolioSwiper = document.querySelector('.portfolio-swiper');
+  if (portfolioSwiper) {
+    new Swiper(portfolioSwiper, {
+      slidesPerView: 2,
+      spaceBetween: 30,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      breakpoints: {
+        768: { slidesPerView: 2 },
+        576: { slidesPerView: 1 }
       }
     });
   }
-
-  window.addEventListener("load", initSwiper);
+}
+window.addEventListener("load", initPortfolioSwiper);
 
   /**
    * Correct scrolling position upon page load for URLs containing hash links.
