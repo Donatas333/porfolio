@@ -1676,6 +1676,44 @@ section,
 .portfolio .portfolio-wrap:hover .portfolio-info .content {
   transform: translateY(0);
 }
+/*--------------------------------------------------------------
+# Portfolio Carousel (Swiper)
+--------------------------------------------------------------*/
+.portfolio .swiper {
+  width: 100%;
+  padding: 20px 0;
+}
+
+.portfolio .swiper-wrapper {
+  display: flex;
+}
+
+.portfolio .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  height: auto;
+}
+
+.portfolio .swiper-button-next,
+.portfolio .swiper-button-prev {
+  color: var(--accent-color);
+  transition: 0.3s;
+}
+
+.portfolio .swiper-button-next:hover,
+.portfolio .swiper-button-prev:hover {
+  color: var(--contrast-color);
+}
+
+.portfolio .swiper-pagination-bullet {
+  background: var(--accent-color);
+  opacity: 0.6;
+}
+
+.portfolio .swiper-pagination-bullet-active {
+  opacity: 1;
+}
 
 /*--------------------------------------------------------------
 # Services Section
