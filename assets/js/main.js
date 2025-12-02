@@ -162,25 +162,27 @@ document.querySelectorAll('.portfolio-filters li').forEach(function(filterBtn) {
     const filter = this.getAttribute('data-filter');
     const slides = document.querySelectorAll('.swiper-slide');
 
-    // 1. Fade-out visų skaidrių
+    // Paslėpti visas skaidres (nuimti .show klasę)
     slides.forEach(function(slide) {
-      slide.style.opacity = '0';
-      slide.style.pointerEvents = 'none';
+      slide.classList.remove('show');
     });
 
-    // 2. Po nedidelio uždelsimo – rodyk tik atitinkančias su fade-in
+    // Po nedidelio uždelsimo parodyti tik atitinkančias
     setTimeout(() => {
       slides.forEach(function(slide) {
         if (filter === '*' || slide.classList.contains(filter.substring(1))) {
-          slide.style.display = 'flex';
-          setTimeout(() => {
-            slide.style.opacity = '1';
-            slide.style.pointerEvents = 'auto';
-          }, 50); // fade-in pradžia
-        } else {
-          slide.style.display = 'none';
+          slide.classList.add('show');
         }
       });
+
+      // Atnaujinti Swiper
+      if (portfolioSwiperInstance) {
+        portfolioSwiperInstance.update();
+      }
+    }, 200); // fade-out trukmė
+  });
+});
+
 
       // 3. Atnaujink Swiper
       if (portfolioSwiperInstance) {
