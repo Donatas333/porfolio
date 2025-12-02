@@ -153,32 +153,34 @@
   window.addEventListener("load", initPortfolioSwiper);
 
   /**
-   * Filtrų logika Swiper skaidrėms
-   */
-  document.querySelectorAll('.portfolio-filters li').forEach(function(filterBtn) {
-    filterBtn.addEventListener('click', function() {
-      // Pažymėk aktyvų filtrą
-      document.querySelector('.filter-active').classList.remove('filter-active');
-      this.classList.add('filter-active');
+ * Filtrų logika Swiper skaidrėms
+ */
+document.querySelectorAll('.portfolio-filters li').forEach(function(filterBtn) {
+  filterBtn.addEventListener('click', function() {
+    // Pažymėk aktyvų filtrą
+    document.querySelector('.filter-active').classList.remove('filter-active');
+    this.classList.add('filter-active');
 
-      // Gauk filtravimo klasę
-      const filter = this.getAttribute('data-filter');
+    // Gauk filtravimo klasę
+    const filter = this.getAttribute('data-filter');
 
-      // Rodyk arba slėpk skaidres
-      document.querySelectorAll('.swiper-slide').forEach(function(slide) {
-        if (filter === '*' || slide.classList.contains(filter.substring(1))) {
-          slide.style.display = 'flex';
-        } else {
-          slide.style.display = 'none';
-        }
-      });
-
-      // Atnaujink Swiper po filtravimo
-      if (portfolioSwiperInstance) {
-        portfolioSwiperInstance.update();
+    // Rodyk arba slėpk skaidres (fade-in/fade-out veiks per CSS)
+    document.querySelectorAll('.swiper-slide').forEach(function(slide) {
+      if (filter === '*' || slide.classList.contains(filter.substring(1))) {
+        slide.style.display = 'flex';
+      } else {
+        slide.style.display = 'none';
       }
     });
+
+    // Atnaujink Swiper po filtravimo
+    if (portfolioSwiperInstance) {
+      portfolioSwiperInstance.update();
+    }
   });
+});
+
+
 
   /**
    * Correct scrolling position upon page load for URLs containing hash links.
