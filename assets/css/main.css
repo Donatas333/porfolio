@@ -2533,6 +2533,70 @@ section,
   margin: 0;
   font-size: 14px;
 }
+/* Portfolio kortelių stilius */
+.portfolio-wrap {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-wrap:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Skaidrių fade-in/fade-out perėjimas */
+.swiper-slide {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.swiper-slide[style*="display: none"] {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+.swiper-slide[style*="display: flex"] {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+/* Swiper rodyklių interaktyvumas */
+.swiper-button-next,
+.swiper-button-prev {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.8;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  transform: scale(1.2);
+  opacity: 1;
+}
+
+/* Pagination rutuliukai po nuotraukomis */
+.portfolio-swiper .swiper-pagination {
+  position: relative;
+  bottom: auto;
+  top: auto;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Pagerintas pagination stilius */
+.swiper-pagination-bullet {
+  background: #ffffff;
+  opacity: 0.5;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background: #00bcd4; /* gali pakeisti į savo brand spalvą */
+  opacity: 1;
+  transform: scale(1.2);
+}
 
 @media (max-width: 991px) {
 

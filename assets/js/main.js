@@ -152,33 +152,47 @@
   }
   window.addEventListener("load", initPortfolioSwiper);
 
-  /**
-   * Filtrų logika Swiper skaidrėms
-   */
-  document.querySelectorAll('.portfolio-filters li').forEach(function(filterBtn) {
-    filterBtn.addEventListener('click', function() {
-      // Pažymėk aktyvų filtrą
-      document.querySelector('.filter-active').classList.remove('filter-active');
-      this.classList.add('filter-active');
+/** Filtrų logika Swiper skaidrėms */
+document.querySelectorAll('.portfolio-filters li').forEach(function(filterBtn) {
+  filterBtn.addEventListener('click', function() {
+    // Pažymėk aktyvų filtrą
+    document.querySelector('.filter-active').classList.remove('filter-active');
+    this.classList.add('filter-active');
 
-      // Gauk filtravimo klasę
-      const filter = this.getAttribute('data-filter');
+    const filter = this.getAttribute('data-filter');
+    const slides = document.querySelectorAll('.swiper-slide');
 
-      // Rodyk arba slėpk skaidres
-      document.querySelectorAll('.swiper-slide').forEach(function(slide) {
+    // Paslėpti visas skaidres (nuimti .show klasę)
+    slides.forEach(function(slide) {
+      slide.classList.remove('show');
+    });
+
+    // Po nedidelio uždelsimo parodyti tik atitinkančias
+    setTimeout(() => {
+      slides.forEach(function(slide) {
         if (filter === '*' || slide.classList.contains(filter.substring(1))) {
-          slide.style.display = 'flex';
-        } else {
-          slide.style.display = 'none';
+          slide.classList.add('show');
         }
       });
 
-      // Atnaujink Swiper po filtravimo
+      // Atnaujinti Swiper
       if (portfolioSwiperInstance) {
         portfolioSwiperInstance.update();
       }
-    });
+    }, 200); // fade-out trukmė
   });
+});
+
+
+      // 3. Atnaujink Swiper
+      if (portfolioSwiperInstance) {
+        portfolioSwiperInstance.update();
+      }
+    }, 200); // fade-out trukmė
+  });
+});
+
+
 
   /**
    * Correct scrolling position upon page load for URLs containing hash links.
