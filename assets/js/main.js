@@ -185,7 +185,32 @@
   }
 
   window.addEventListener("load", initSwiper);
-
+/** -----------------------------
+   * Portfolio Carousel (Swiper)
+   * ----------------------------- **/
+  function initPortfolioSwiper() {
+    const portfolioSwiper = document.querySelector('.portfolio-swiper');
+    if (portfolioSwiper) {
+      new Swiper(portfolioSwiper, {
+        slidesPerView: 2,
+        spaceBetween: 30,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        breakpoints: {
+          768: { slidesPerView: 2 },
+          576: { slidesPerView: 1 }
+        }
+      });
+    }
+  }
+  window.addEventListener("load", initPortfolioSwiper);
+  
   /**
    * Correct scrolling position upon page load for URLs containing hash links.
    */
