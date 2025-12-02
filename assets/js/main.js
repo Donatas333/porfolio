@@ -152,31 +152,41 @@
   }
   window.addEventListener("load", initPortfolioSwiper);
 
-  /**
- * Filtrų logika Swiper skaidrėms
- */
+/** Filtrų logika Swiper skaidrėms */
 document.querySelectorAll('.portfolio-filters li').forEach(function(filterBtn) {
   filterBtn.addEventListener('click', function() {
     // Pažymėk aktyvų filtrą
     document.querySelector('.filter-active').classList.remove('filter-active');
     this.classList.add('filter-active');
 
-    // Gauk filtravimo klasę
     const filter = this.getAttribute('data-filter');
+    const slides = document.querySelectorAll('.swiper-slide');
 
-    // Rodyk arba slėpk skaidres (fade-in/fade-out veiks per CSS)
-    document.querySelectorAll('.swiper-slide').forEach(function(slide) {
-      if (filter === '*' || slide.classList.contains(filter.substring(1))) {
-        slide.style.display = 'flex';
-      } else {
-        slide.style.display = 'none';
-      }
+    // 1. Fade-out visų skaidrių
+    slides.forEach(function(slide) {
+      slide.style.opacity = '0';
+      slide.style.pointerEvents = 'none';
     });
 
-    // Atnaujink Swiper po filtravimo
-    if (portfolioSwiperInstance) {
-      portfolioSwiperInstance.update();
-    }
+    // 2. Po nedidelio uždelsimo – rodyk tik atitinkančias su fade-in
+    setTimeout(() => {
+      slides.forEach(function(slide) {
+        if (filter === '*' || slide.classList.contains(filter.substring(1))) {
+          slide.style.display = 'flex';
+          setTimeout(() => {
+            slide.style.opacity = '1';
+            slide.style.pointerEvents = 'auto';
+          }, 50); // fade-in pradžia
+        } else {
+          slide.style.display = 'none';
+        }
+      });
+
+      // 3. Atnaujink Swiper
+      if (portfolioSwiperInstance) {
+        portfolioSwiperInstance.update();
+      }
+    }, 200); // fade-out trukmė
   });
 });
 
